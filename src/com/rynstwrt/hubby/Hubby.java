@@ -1,62 +1,51 @@
 package com.rynstwrt.hubby;
 
-import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.FileConfiguration;
+import com.rynstwrt.hubby.cmds.HTPCmd;
+import com.rynstwrt.hubby.cmds.HubCmd;
+import com.rynstwrt.hubby.cmds.HubbyCmd;
+import com.rynstwrt.hubby.cmds.SpawnCmd;
+import com.rynstwrt.hubby.configs.HubbyConfig;
+import com.rynstwrt.hubby.listeners.PlayerListener;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.logging.Logger;
+import java.util.Arrays;
 
 public class Hubby extends JavaPlugin {
 
-    private static Logger log;
-    private static PluginManager pm;
-    private static FileConfiguration config;
+    private static Hubby instance;
+
+    private static HubbyConfig config;
+
+
+    @Override
+    public void onLoad() { instance = this; }
 
     @Override
     public void onEnable() {
-        new Events(this);
-        log = Logger.getLogger("Minecraft");
-        pm = this.getServer().getPluginManager();
 
-        /*pm.addPermission(new Permission("hubby.use"));
-        pm.addPermission(new Permission("hubby.reload"));
-        pm.addPermission(new Permission("hubby.bypass");
-        */
+        saveDefaultConfig();
+        config = HubbyConfig.from(getConfig());
 
-        if (!getConfig().contains("chatprefix")) {
-            getConfig().addDefault("chatprefix", ChatColor.AQUA + "Server " + ChatColor.GRAY + "» ");
-        }
+        registerEvents(new PlayerListener());
 
-        if (!getConfig().contains("hubworld")) {
-            getConfig().addDefault("hubworld", this.getServer().getWorlds().get(0).getName());
-        }
-
-        if (!getConfig().contains("teleport.sendteleportmessage")) {
-            getConfig().addDefault("teleport.sendteleportmessage", true);
-        }
-
-        if (!getConfig().contains("teleport.spawnteleportmessage")) {
-            getConfig().addDefault("teleport.spawnteleportmessage", ChatColor.GREEN + "You have been teleported back to spawn!");
-        }
-
-        if (!getConfig().contains("teleport.hubteleportmessage")) {
-            getConfig().addDefault("teleport.hubteleportmessage", ChatColor.GREEN + "You have been teleported back to the lobby!");
-        }
-
-        saveConfig();
-
-        getCommand("hub").setExecutor(new CommandHub(this));
-        getCommand("spawn").setExecutor(new CommandSpawn(this));
-        getCommand("hubby").setExecutor(new CommandHubby(this));
-        getCommand("htp").setExecutor(new CommandHubby(this));
+        getCommand("hub").setExecutor(new HubCmd());
+        getCommand("htp").setExecutor(new HTPCmd());
+        getCommand("spawn").setExecutor(new SpawnCmd());
+        getCommand("hubby").setExecutor(new HubbyCmd());
 
     }
 
-    @Override
-    public void onDisable() {
 
+    public static Hubby instance() { return instance; }
+
+    public static HubbyConfig config() { return config; }
+
+
+    private void registerEvents(Listener... listeners) {
+        PluginManager pm = getServer().getPluginManager();
+        Arrays.stream(listeners).forEach(it -> pm.registerEvents(it, instance));
     }
-
 
 }

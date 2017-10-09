@@ -1,0 +1,16 @@
+####################
+#     Hubby-MC     #
+####################
+
+
+prefix: "&bServer &7» "
+
+hubWorldName: "world"
+
+
+teleport:
+
+  sendTeleportMessage: true
+
+  spawnTeleportMessage: "&fYou have been teleported back to spawn!"
+  hubTeleportMessage: "&fYou have been teleported back to the lobby!"
