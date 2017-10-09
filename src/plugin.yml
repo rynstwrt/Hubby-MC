@@ -1,0 +1,34 @@
+name: Hubby
+main: com.rynstwrt.hubby.Hubby
+version: 0.6
+author: github/rynstwrt
+commands:
+  spawn:
+    aliases: []
+    description: Takes user to the spawn OF A WORLD.
+    usage: /<command>
+  hub:
+    aliases: [lobby]
+    description: Takes a user to the spawn of a configurable main world.
+    usage: /<command>
+  hubby:
+    description: Used to reload the plugin's configuration.
+    usage: /<command> reload
+
+permissions:
+  hubby.*:
+    description: Ability to reload the plugin and to use it.
+    children:
+      hubby.use: true
+      hubby.reload: true
+      hubby.sethub: true
+    default: op
+  hubby.use:
+    description: Allows for /spawn and /hub.
+    default: true
+  hubby.reload:
+    description: Allows for /hubby reload.
+    default: op
+  hubby.bypass:
+    description: Users with this permission are not teleported to the hub on join.
+    default: op
