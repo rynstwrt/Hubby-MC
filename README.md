@@ -8,19 +8,31 @@ Minecraft server hub plugin using already-existing world spawns (set in config, 
   * Returns a player to the **global** spawn.
 * /hubby reload
   * Reloads config.
-* /hubby tp
-  * Teleports a player to a specified world.
 * /htp
-  * Alternative to /hubby tp.
+  * Teleports a player to a specified world.
   
 # Config:
 ```YAML
-chatprefix: '§bServer §7» '
-hubworld: world
+####################
+#     Hubby-MC     #
+####################
+
+#What is said before the teleport messages.
+prefix: "&bServer &7» "
+
+#What world you want players to be teleported to when they type /hub.
+hubWorldName: "world"
+
+
 teleport:
-  sendteleportmessage: true
-  spawnteleportmessage: §fYou have been teleported back to spawn!
-  hubteleportmessage: §fYou have been teleported back to the lobby!
+
+  #if true, gives players a message when teleported.
+  sendTeleportMessage: true
+
+  #These messages are customizable.
+  spawnTeleportMessage: "&aYou have been teleported back to spawn!"
+  hubTeleportMessage: "&aYou have been teleported back to the lobby!"
+
 ```
 
 # Permissions:
