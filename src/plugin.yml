@@ -19,6 +19,10 @@ commands:
     permission: hubby.use
     description: Takes a user to the spawn of a configurable main world.
 
+  htp:
+    permission: hubby.tp
+    description: Teleports a player to a specified world.
+
 
 permissions:
 

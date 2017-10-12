@@ -34,7 +34,6 @@ public class HubbyConfig {
 		return new HubbyConfig(sendTeleportMsg, chatPrefix, hubWorldName, spawnTeleportMsg, hubTeleportMsg);
 	}
 
-
 	public String prefix() { return prefix; }
 
 	public String hubWorldName() { return hubWorldName; }

@@ -31,9 +31,9 @@ public class Hubby extends JavaPlugin {
         registerEvents(new PlayerListener());
 
         getCommand("hub").setExecutor(new HubCmd());
-        getCommand("htp").setExecutor(new HTPCmd());
         getCommand("spawn").setExecutor(new SpawnCmd());
         getCommand("hubby").setExecutor(new HubbyCmd());
+        getCommand("htp").setExecutor(new HTPCmd());
 
     }
 

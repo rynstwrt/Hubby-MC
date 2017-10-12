@@ -2,15 +2,18 @@
 #     Hubby-MC     #
 ####################
 
-
+#What is said before the teleport messages.
 prefix: "&bServer &7» "
 
+#What world you want players to be teleported to when they type /hub.
 hubWorldName: "world"
 
 
 teleport:
 
+  #if true, gives players a message when teleported.
   sendTeleportMessage: true
 
-  spawnTeleportMessage: "&fYou have been teleported back to spawn!"
-  hubTeleportMessage: "&fYou have been teleported back to the lobby!"
+  #These messages are customizable.
+  spawnTeleportMessage: "&aYou have been teleported back to spawn!"
+  hubTeleportMessage: "&aYou have been teleported back to the lobby!"
