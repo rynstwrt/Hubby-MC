@@ -39,4 +39,7 @@ teleport:
 * `hubby.use` Allows the commands /spawn and /hub.
 * `hubby.reload` Allows the command /hubby reload
 * `hubby.bypass` Permitted players aren't teleported to hub on join.
+* `hubby.tp.self` Allows players to teleport themselves to a specified world.
+* `hubby.tp.others` Allows players to teleport other players to a specified world.
+* `hubby.tp.*` Gives permission to both `hubby.tp.self` and `hubby.tp.others`.
 * `hubby.*` All of the above.
