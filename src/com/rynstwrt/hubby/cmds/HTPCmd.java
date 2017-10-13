@@ -21,10 +21,7 @@ public class HTPCmd implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
-		if (args.length < 1 || args.length > 2) {
-			sender.sendMessage(Constants.HTP_HELP_MSG);
-			return false;
-		}
+		if (args.length < 1 || args.length > 2) return false;
 
 		if (!(sender instanceof Player) && args.length == 1) {
 			sender.sendMessage(Constants.NOT_PLAYER_MSG);
@@ -35,7 +32,7 @@ public class HTPCmd implements CommandExecutor {
 
 		    if (!sender.hasPermission("hubby.tp.self")) {
 		        sender.sendMessage(Constants.NO_PERM_MSG);
-		        return false;
+		        return true;
             }
 
 			Player plr = (Player) sender;
@@ -43,7 +40,7 @@ public class HTPCmd implements CommandExecutor {
 
 			if (selectedWorld == null) {
 				plr.sendMessage(Constants.WORLD_NOT_FOUND_MSG);
-				return false;
+				return true;
 			} else {
 				plr.teleport(selectedWorld.getSpawnLocation());
 			}
@@ -56,7 +53,7 @@ public class HTPCmd implements CommandExecutor {
 
             if (!sender.hasPermission("hubby.tp.others")) {
                 sender.sendMessage(Constants.NO_PERM_MSG);
-                return false;
+                return true;
             }
 
             boolean playerFound = false;
@@ -72,22 +69,23 @@ public class HTPCmd implements CommandExecutor {
 
 			if (!playerFound) {
 				sender.sendMessage(Constants.PLAYER_NOT_FOUND_MSG);
-				return false;
+				return true;
 			}
 
 			if (getWorld(args[1]) == null) {
 				sender.sendMessage(Constants.WORLD_NOT_FOUND_MSG);
+				return true;
 			}
 
 			getServer().getPlayer(args[0]).teleport(getServer().getWorld(args[1]).getSpawnLocation());
 
-			if (!config().sendTeleportMsg()) return false;
+			if (!config().sendTeleportMsg()) return true;
 
 			sender.sendMessage(config().prefix() + GREEN + "Successfully teleported player " + AQUA + plr.getName() + GREEN + ".");
 			plr.sendMessage(config().prefix() + GREEN + "You have been teleported to the world " + AQUA + args[1] + GREEN + ".");
 		}
 
-		return true;
+		return false;
 	}
 
 }

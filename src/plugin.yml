@@ -1,5 +1,5 @@
 name: Hubby
-version: 1.2.0
+version: 2.2.1
 author: github/rynstwrt
 main: com.rynstwrt.hubby.Hubby
 
@@ -9,10 +9,11 @@ commands:
   spawn:
     permission: hubby.use
     description: Takes user to the spawn OF THE WORLD.
+    usage: /<command>
 
   hubby:
     description: Used to reload the plugin's configuration.
-    usage: /<command> reload
+    usage: §b[HUBBY] §a Did you mean "/<command> reload"?
 
   hub:
     aliases: [lobby, spawn]
@@ -22,6 +23,7 @@ commands:
   htp:
     permission: hubby.tp
     description: Teleports a player to a specified world.
+    usage: §b[HUBBY] §a Did you mean "/<command> <playername> <world>" or "/<command> <world>"?
 
 
 permissions:
