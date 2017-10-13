@@ -18,7 +18,6 @@ public class Hubby extends JavaPlugin {
 
     private static HubbyConfig config;
 
-
     @Override
     public void onLoad() { instance = this; }
 
@@ -37,11 +36,9 @@ public class Hubby extends JavaPlugin {
 
     }
 
-
     public static Hubby instance() { return instance; }
 
     public static HubbyConfig config() { return config; }
-
 
     private void registerEvents(Listener... listeners) {
         PluginManager pm = getServer().getPluginManager();

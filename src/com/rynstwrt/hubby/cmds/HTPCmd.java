@@ -32,6 +32,12 @@ public class HTPCmd implements CommandExecutor {
 		}
 
 		if (args.length == 1) {
+
+		    if (!sender.hasPermission("hubby.tp.self")) {
+		        sender.sendMessage(Constants.NO_PERM_MSG);
+		        return false;
+            }
+
 			Player plr = (Player) sender;
 			World selectedWorld = getWorld(args[0]);
 
@@ -47,7 +53,13 @@ public class HTPCmd implements CommandExecutor {
 			plr.sendMessage(config().prefix() + GREEN + "You have been teleported to the world " + AQUA + args[0] + GREEN + ".");
 
 		} else {
-			boolean playerFound = false;
+
+            if (!sender.hasPermission("hubby.tp.others")) {
+                sender.sendMessage(Constants.NO_PERM_MSG);
+                return false;
+            }
+
+            boolean playerFound = false;
 			Player plr = null;
 
 			for (Object player : getOnlinePlayers().toArray()) {

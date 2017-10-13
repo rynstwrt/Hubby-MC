@@ -1,5 +1,5 @@
 name: Hubby
-version: 1.0
+version: 1.2.0
 author: github/rynstwrt
 main: com.rynstwrt.hubby.Hubby
 
@@ -28,22 +28,33 @@ permissions:
 
   hubby.use:
     description: Allows for /spawn and /hub.
-    default: true
 
   hubby.reload:
     description: Allows for /hubby reload.
-    default: op
 
   hubby.bypass:
     description: Users with this permission are not teleported to the hub on join.
-    default: op
+
+  hubby.tp.self:
+    description: Allows a player to teleport themselves to a specified world.
+
+  hubby.tp.others:
+    description: Allows a user to teleport another player to a specified world.
+
+  hubby.tp.*:
+
+    description:
+
+    children:
+      hubby.tp.self: true
+      hubby.tp.others: true
 
   hubby.*:
 
-    default: op
-    description: Ability to reload the plugin and to use it.
+    description: Gives permission to all of Hubby's commands.
 
     children:
       hubby.use: true
       hubby.reload: true
       hubby.sethub: true
+      hubby.tp.*: true
