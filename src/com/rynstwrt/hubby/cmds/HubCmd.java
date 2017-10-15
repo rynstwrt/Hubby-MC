@@ -24,7 +24,7 @@ public class HubCmd implements CommandExecutor {
 		if (!sender.hasPermission("hubby.use")) {
 		    sender.sendMessage(Constants.NO_PERM_MSG);
 		    return true;
-        }
+        	}
 
 		Player player = (Player) sender;
 		player.teleport(getWorld(config().hubWorldName()).getSpawnLocation());
