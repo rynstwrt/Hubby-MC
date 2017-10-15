@@ -1,6 +1,5 @@
 package com.rynstwrt.hubby.cmds;
 
-import com.rynstwrt.hubby.struct.Constants;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -8,15 +7,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import static com.rynstwrt.hubby.Hubby.config;
-import static org.bukkit.Bukkit.getOnlinePlayers;
-import static org.bukkit.Bukkit.getServer;
-import static org.bukkit.Bukkit.getWorld;
+import static com.rynstwrt.hubby.struct.Constants.*;
+import static org.bukkit.Bukkit.*;
 import static org.bukkit.ChatColor.AQUA;
 import static org.bukkit.ChatColor.GREEN;
 
 public class HTPCmd implements CommandExecutor {
-
-	@SuppressWarnings( "deprecation" )
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -24,68 +20,56 @@ public class HTPCmd implements CommandExecutor {
 		if (args.length < 1 || args.length > 2) return false;
 
 		if (!(sender instanceof Player) && args.length == 1) {
-			sender.sendMessage(Constants.NOT_PLAYER_MSG);
+			sender.sendMessage(NOT_PLAYER_MSG);
 			return false;
 		}
 
-		if (args.length == 1) {
+		Player target = args.length == 1 ? (Player) sender : getPlayer(args[0]);
+		if (target == null) return false;
+
+
 
 		    if (!sender.hasPermission("hubby.tp.self")) {
-		        sender.sendMessage(Constants.NO_PERM_MSG);
+		        sender.sendMessage(NO_PERM_MSG);
 		        return true;
             }
 
-			Player plr = (Player) sender;
+			Player player = (Player) sender;
 			World selectedWorld = getWorld(args[0]);
 
 			if (selectedWorld == null) {
-				plr.sendMessage(Constants.WORLD_NOT_FOUND_MSG);
+				player.sendMessage(WORLD_NOT_FOUND_MSG);
 				return true;
 			} else {
-				plr.teleport(selectedWorld.getSpawnLocation());
+				player.teleport(selectedWorld.getSpawnLocation());
 			}
 
 			if (!config().sendTeleportMsg()) return false;
 
-			plr.sendMessage(config().prefix() + GREEN + "You have been teleported to the world " + AQUA + args[0] + GREEN + ".");
+			player.sendMessage(config().prefix() + GREEN + "You have been teleported to the world " + AQUA + args[0] + GREEN + ".");
 
-		} else {
 
-            if (!sender.hasPermission("hubby.tp.others")) {
-                sender.sendMessage(Constants.NO_PERM_MSG);
-                return true;
-            }
 
-            boolean playerFound = false;
-			Player plr = null;
-
-			for (Object player : getOnlinePlayers().toArray()) {
-				plr = (Player) player;
-
-				if (plr.getName().equalsIgnoreCase(args[0])) {
-					playerFound = true;
-				}
-			}
-
-			if (!playerFound) {
-				sender.sendMessage(Constants.PLAYER_NOT_FOUND_MSG);
-				return true;
-			}
-
-			if (getWorld(args[1]) == null) {
-				sender.sendMessage(Constants.WORLD_NOT_FOUND_MSG);
-				return true;
-			}
-
-			getServer().getPlayer(args[0]).teleport(getServer().getWorld(args[1]).getSpawnLocation());
-
-			if (!config().sendTeleportMsg()) return true;
-
-			sender.sendMessage(config().prefix() + GREEN + "Successfully teleported player " + AQUA + plr.getName() + GREEN + ".");
-			plr.sendMessage(config().prefix() + GREEN + "You have been teleported to the world " + AQUA + args[1] + GREEN + ".");
+		if (!sender.hasPermission("hubby.tp.others")) {
+			sender.sendMessage(NO_PERM_MSG);
+			return true;
 		}
 
-		return false;
+
+
+		if (getWorld(args[1]) == null) {
+			sender.sendMessage(WORLD_NOT_FOUND_MSG);
+			return true;
+		}
+
+		getServer().getPlayer(args[0]).teleport(getServer().getWorld(args[1]).getSpawnLocation());
+
+		if (!config().sendTeleportMsg()) return true;
+
+		sender.sendMessage(config().prefix() + GREEN + "Successfully teleported player " + AQUA + plr.getName() + GREEN + ".");
+		plr.sendMessage(config().prefix() + GREEN + "You have been teleported to the world " + AQUA + args[1] + GREEN + ".");
+
+		return true;
 	}
 
 }
