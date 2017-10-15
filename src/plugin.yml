@@ -12,12 +12,13 @@ commands:
     usage: /<command>
 
   hubby:
+    permission: hubby.reload
+    permission-message: ""
     description: Used to reload the plugin's configuration.
     usage: §b[HUBBY] §a Did you mean "/<command> reload"?
 
   hub:
     aliases: [lobby, spawn]
-    permission: hubby.use
     description: Takes a user to the spawn of a configurable main world.
 
   htp:

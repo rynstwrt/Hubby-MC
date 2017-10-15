@@ -17,57 +17,43 @@ public class HTPCmd implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
-		if (args.length < 1 || args.length > 2) return false;
+		if (args.length != 1 && args.length != 2) return false;
+
 
 		if (!(sender instanceof Player) && args.length == 1) {
 			sender.sendMessage(NOT_PLAYER_MSG);
-			return false;
+			return true;
 		}
 
 		Player target = args.length == 1 ? (Player) sender : getPlayer(args[0]);
 		if (target == null) return false;
 
 
+		World world = args.length == 2 ? getWorld(args[0]) : target.getWorld();
 
-		    if (!sender.hasPermission("hubby.tp.self")) {
-		        sender.sendMessage(NO_PERM_MSG);
-		        return true;
-            }
-
-			Player player = (Player) sender;
-			World selectedWorld = getWorld(args[0]);
-
-			if (selectedWorld == null) {
-				player.sendMessage(WORLD_NOT_FOUND_MSG);
-				return true;
-			} else {
-				player.teleport(selectedWorld.getSpawnLocation());
-			}
-
-			if (!config().sendTeleportMsg()) return false;
-
-			player.sendMessage(config().prefix() + GREEN + "You have been teleported to the world " + AQUA + args[0] + GREEN + ".");
+		if (world == null) {
+			target.sendMessage(WORLD_NOT_FOUND_MSG);
+			return true;
+		}
 
 
-
-		if (!sender.hasPermission("hubby.tp.others")) {
+		if (!sender.hasPermission("hubby.tp.self") && sender == target) {
 			sender.sendMessage(NO_PERM_MSG);
 			return true;
 		}
 
-
-
-		if (getWorld(args[1]) == null) {
-			sender.sendMessage(WORLD_NOT_FOUND_MSG);
+		if (!sender.hasPermission("hubby.tp.others") && sender != target) {
+			sender.sendMessage(NO_PERM_MSG);
 			return true;
 		}
 
-		getServer().getPlayer(args[0]).teleport(getServer().getWorld(args[1]).getSpawnLocation());
+		target.teleport(world.getSpawnLocation());
 
-		if (!config().sendTeleportMsg()) return true;
+		if (!config().sendTeleportMsg()) return false;
 
-		sender.sendMessage(config().prefix() + GREEN + "Successfully teleported player " + AQUA + plr.getName() + GREEN + ".");
-		plr.sendMessage(config().prefix() + GREEN + "You have been teleported to the world " + AQUA + args[1] + GREEN + ".");
+		if (sender != target) sender.sendMessage(config().prefix() + GREEN + "Successfully teleported player " + AQUA + target.getName() + GREEN + ".");
+
+		target.sendMessage(config().prefix() + GREEN + "You have been teleported to the world " + AQUA + args[0] + GREEN + ".");
 
 		return true;
 	}
